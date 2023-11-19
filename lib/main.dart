@@ -75,6 +75,18 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Conta ',
       value: 310.76,
       date: DateTime.now().subtract(const Duration(days: 4)),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta ',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 2)),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta ',
+      value: 100310.76,
+      date: DateTime.now().subtract(const Duration(days: 1)),
     )
   ];
 
