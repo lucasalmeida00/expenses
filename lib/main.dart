@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
@@ -15,7 +16,7 @@ class ExpensesApp extends StatelessWidget {
     final ThemeData tema = ThemeData();
 
     return MaterialApp(
-      home: MyHomePage(),
+      home: const MyHomePage(),
       theme: tema.copyWith(
         primaryColor: Colors.purple,
         colorScheme: tema.colorScheme.copyWith(
@@ -50,7 +51,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta antiga',
+      value: 400,
+      date: DateTime.now().subtract(const Duration(days: 33)),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Tênis da nike',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta de luz',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 4)),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta ',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 4)),
+    )
+  ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((transaction) {
+      return transaction.date.isAfter(
+        DateTime.now().subtract(const Duration(days: 7)),
+      );
+    }).toList();
+  }
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
@@ -98,13 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(
-            child: Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text('Gráfico'),
-            ),
-          ),
+          Chart(_recentTransactions),
           TransactionList(_transactions),
         ],
       ),
