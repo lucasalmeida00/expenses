@@ -51,44 +51,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Conta antiga',
-    //   value: 400,
-    //   date: DateTime.now().subtract(const Duration(days: 33)),
-    // ),
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Tênis da nike',
-    //   value: 310.76,
-    //   date: DateTime.now().subtract(const Duration(days: 3)),
-    // ),
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Conta de luz',
-    //   value: 310.76,
-    //   date: DateTime.now().subtract(const Duration(days: 4)),
-    // ),
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Conta ',
-    //   value: 310.76,
-    //   date: DateTime.now().subtract(const Duration(days: 4)),
-    // ),
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Conta ',
-    //   value: 310.76,
-    //   date: DateTime.now().subtract(const Duration(days: 2)),
-    // ),
-    // Transaction(
-    //   id: Random().nextDouble().toString(),
-    //   title: 'Conta ',
-    //   value: 100310.76,
-    //   date: DateTime.now(),
-    // )
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((transaction) {
@@ -98,17 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
       _transactions.add(newTransaction);
       _closeTransactionFormModal(context);
+    });
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((transaction) => transaction.id == id);
     });
   }
 
@@ -145,7 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Chart(_recentTransactions),
-          TransactionList(_transactions),
+          TransactionList(
+            _transactions,
+            onRemove: _removeTransaction,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(

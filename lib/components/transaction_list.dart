@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String id) onRemove;
 
-  const TransactionList(this.transactions, {super.key});
+  const TransactionList(this.transactions, {super.key, required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +39,27 @@ class TransactionList extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: FittedBox(
-                          child: Text('R\$${tr.value}'),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text('R\$${tr.value}'),
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      tr.title,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(tr.date),
-                    ),
-                  ),
+                      title: Text(
+                        tr.title,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      subtitle: Text(
+                        DateFormat('d MMM y').format(tr.date),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: Theme.of(context).colorScheme.error,
+                        onPressed: () => onRemove(tr.id),
+                      )),
                 );
               },
             ),
