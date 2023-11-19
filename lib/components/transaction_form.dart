@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String title, double value) onSubmit;
@@ -10,20 +11,34 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final textController = TextEditingController();
-
-  final valueController = TextEditingController();
+  final _textController = TextEditingController();
+  final _valueController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
-    if (textController.text.isEmpty ||
-        double.tryParse(valueController.text) == null) {
+    if (_textController.text.isEmpty ||
+        double.tryParse(_valueController.text) == null) {
       return;
     }
 
     widget.onSubmit(
-        textController.text, double.tryParse(valueController.text) ?? 0.0);
-    textController.value = TextEditingValue.empty;
-    valueController.value = TextEditingValue.empty;
+        _textController.text, double.tryParse(_valueController.text) ?? 0.0);
+    _textController.value = TextEditingValue.empty;
+    _valueController.value = TextEditingValue.empty;
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) return;
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -33,12 +48,11 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: SizedBox(
-          height: 200,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                controller: textController,
+                controller: _textController,
                 decoration: const InputDecoration(
                   labelText: 'Título',
                 ),
@@ -46,22 +60,47 @@ class _TransactionFormState extends State<TransactionForm> {
               TextField(
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                controller: valueController,
+                controller: _valueController,
                 decoration: const InputDecoration(
                   labelText: 'Valor (R\$)',
                 ),
-                onSubmitted: (_) => _submitForm,
+                // onSubmitted: (_) => _submitForm,
+              ),
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_selectedDate == null
+                        ? "Nenhuma data selecionada!"
+                        : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}'),
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.purple),
+                      ),
+                      onPressed: _showDatePicker,
+                      child: const Text(
+                        'Selecionar Data',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
+                  ElevatedButton(
                       style: ButtonStyle(
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.purple),
                       ),
                       onPressed: _submitForm,
-                      child: const Text('Nova Transação')),
+                      child: const Text(
+                        'Nova Transação',
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ],
               )
             ],

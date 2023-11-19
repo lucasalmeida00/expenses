@@ -52,42 +52,42 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Conta antiga',
-      value: 400,
-      date: DateTime.now().subtract(const Duration(days: 33)),
-    ),
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Tênis da nike',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 3)),
-    ),
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Conta de luz',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Conta ',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Conta ',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 2)),
-    ),
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Conta ',
-      value: 100310.76,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Conta antiga',
+    //   value: 400,
+    //   date: DateTime.now().subtract(const Duration(days: 33)),
+    // ),
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Tênis da nike',
+    //   value: 310.76,
+    //   date: DateTime.now().subtract(const Duration(days: 3)),
+    // ),
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Conta de luz',
+    //   value: 310.76,
+    //   date: DateTime.now().subtract(const Duration(days: 4)),
+    // ),
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Conta ',
+    //   value: 310.76,
+    //   date: DateTime.now().subtract(const Duration(days: 4)),
+    // ),
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Conta ',
+    //   value: 310.76,
+    //   date: DateTime.now().subtract(const Duration(days: 2)),
+    // ),
+    // Transaction(
+    //   id: Random().nextDouble().toString(),
+    //   title: 'Conta ',
+    //   value: 100310.76,
+    //   date: DateTime.now(),
+    // )
   ];
 
   List<Transaction> get _recentTransactions {
