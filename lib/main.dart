@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       id: Random().nextDouble().toString(),
       title: 'Conta ',
       value: 100310.76,
-      date: DateTime.now().subtract(const Duration(days: 1)),
+      date: DateTime.now(),
     )
   ];
 
